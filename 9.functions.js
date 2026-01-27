@@ -127,7 +127,7 @@ testScope();
 
 // 11. Closures
 // ================================
-// Inner function remembers outer variables
+// Inner function remembers outer variables and always use the variable defined in the parent function
 
 function outer() {
     let count = 0;

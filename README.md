@@ -23,6 +23,18 @@ Learn the building blocks of JavaScript:
 </details>
 
 <details>
+<summary>🔤 Strings & Numbers</summary>
+
+Work with text and numbers effectively:  
+
+- 📝 **String Methods**  
+- 🏷 **Template Literals**  
+- 🔢 **Number Methods**  
+- 📏 **Math Object**  
+
+</details>
+
+<details>
 <summary>🔍 Control Flow</summary>
 
 Control the execution of your code:  
@@ -54,18 +66,6 @@ Handle collections and structured data:
 - 🏷 **Object Properties & Methods**  
 - ✂️ **Destructuring**  
 - 📦 **Spread Operator**  
-
-</details>
-
-<details>
-<summary>🔤 Strings & Numbers</summary>
-
-Work with text and numbers effectively:  
-
-- 📝 **String Methods**  
-- 🏷 **Template Literals**  
-- 🔢 **Number Methods**  
-- 📏 **Math Object**  
 
 </details>
 
