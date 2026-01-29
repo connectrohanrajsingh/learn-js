@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-Ez0cGzNzHR1tYAv56860NLspgUGuQw16GiOOp/I2LuTmpSK9xDXlgJz3XN4cnpXWDmkNBKXR/VDMTCnAaEooxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <title>Document</title>
+    </head>
+
+    <body class="bg-dark">
+
+        <div class="row mt-5 p-4">
+            <div class="col-lg-3 border border-light border-2 p-4">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <input type="text" id="yourname" value="User" class="form-control">
+                    </div>
+                    <div class="col-lg-5">
+                        <button onclick="greet()" class="btn btn-primary">Greet Me</button>
+                    </div>
+                </div>
+                <h5 id="welcome" class="text-light mt-2"></h5>
+            </div>
+
+            <div class="col-lg-2 border border-light border-2 p-4 mx-2">
+                <div class="row  d-flex justify-content-center ">
+                    <img src="https://www.w3schools.com/js/pic_bulboff.gif" id="currentBulb" alt="off" style="width:100px">
+                </div>
+                <div class="row mt-2">
+                    <button id="bulbLabel" onclick="toggleBulb()" class="btn btn-primary">Turn Me On</button>
+                </div>
+            </div>
+        </div>
+
+    </body>
+
+    <script src="dom-practice.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js" integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</html>
