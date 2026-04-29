@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Light/Dark Mode Toggle</title>
+
+        <style>
+            :root {
+                --bg: #ffffff;
+                --bg2: #f4f4f4;
+                --card: #ffffff;
+                --text: #111;
+                --muted: #555;
+                --border: #ddd;
+                --accent: #4f8cff;
+            }
+
+            body.dark {
+                --bg: #121212;
+                --bg2: #1e1e1e;
+                --card: #252525;
+                --text: #ffffff;
+                --muted: #b3b3b3;
+                --border: #333;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                transition: .3s;
+            }
+
+            body {
+                font-family: Arial, sans-serif;
+                background: var(--bg);
+                color: var(--text);
+            }
+
+            /* Navbar */
+            nav {
+                background: var(--bg2);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px 40px;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .logo {
+                font-size: 24px;
+                font-weight: bold;
+            }
+
+            nav ul {
+                list-style: none;
+                display: flex;
+                gap: 20px;
+            }
+
+            nav a {
+                text-decoration: none;
+                color: var(--text);
+            }
+
+            .toggle-btn {
+                border: none;
+                background: var(--accent);
+                color: #fff;
+                padding: 10px 18px;
+                border-radius: 30px;
+                cursor: pointer;
+            }
+
+            /* Hero */
+            .hero {
+                text-align: center;
+                padding: 100px 20px;
+            }
+
+            .hero h1 {
+                font-size: 55px;
+                margin-bottom: 20px;
+            }
+
+            .hero p {
+                max-width: 650px;
+                margin: auto;
+                color: var(--muted);
+            }
+
+            .hero button {
+                margin-top: 30px;
+                border: none;
+                background: var(--accent);
+                color: white;
+                padding: 14px 30px;
+                border-radius: 8px;
+                cursor: pointer;
+            }
+
+            /* Cards */
+            .container {
+                width: 90%;
+                max-width: 1100px;
+                margin: 70px auto;
+            }
+
+            .cards {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 25px;
+            }
+
+            .card {
+                background: var(--card);
+                border: 1px solid var(--border);
+                padding: 25px;
+                border-radius: 12px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+            }
+
+            .card p {
+                color: var(--muted);
+                margin-top: 10px;
+            }
+
+            /* Form */
+            .contact {
+                margin-top: 70px;
+                background: var(--card);
+                border: 1px solid var(--border);
+                padding: 30px;
+                border-radius: 12px;
+            }
+
+            input,
+            textarea {
+                width: 100%;
+                margin: 12px 0;
+                padding: 12px;
+                border: 1px solid var(--border);
+                background: var(--bg2);
+                color: var(--text);
+                border-radius: 6px;
+            }
+
+            .contact button {
+                background: var(--accent);
+                border: none;
+                color: #fff;
+                padding: 12px 25px;
+                border-radius: 8px;
+                cursor: pointer;
+            }
+
+            footer {
+                text-align: center;
+                padding: 35px;
+                margin-top: 60px;
+                border-top: 1px solid var(--border);
+                color: var(--muted);
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <nav>
+            <div class="logo">ThemeSite</div>
+
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+            </ul>
+
+            <button class="toggle-btn" id="themeBtn">
+                🌙 Dark Mode
+            </button>
+        </nav>
+
+        <section class="hero">
+            <h1>Light & Dark Theme Toggle</h1>
+            <p>
+                Click the switch in navbar to toggle themes.
+            </p>
+            <button>Explore</button>
+        </section>
+
+        <div class="container">
+
+            <div class="cards">
+                <div class="card">
+                    <h3>Modern UI</h3>
+                    <p>Clean interface with dynamic themes.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Responsive</h3>
+                    <p>Works beautifully on all screens.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Theme Saved</h3>
+                    <p>Uses localStorage to remember choice.</p>
+                </div>
+            </div>
+
+            <section class="contact">
+                <h2>Contact Form</h2>
+
+                <input type="text" placeholder="Name">
+                <input type="email" placeholder="Email">
+                <textarea rows="5" placeholder="Message"></textarea>
+
+                <button>Submit</button>
+
+            </section>
+        </div>
+
+        <footer> © 2026 ThemeSite </footer>
+
+        <script>
+            const themeBtn = document.getElementById("themeBtn");
+
+            if (localStorage.getItem("theme") === "dark") {
+                document.body.classList.add("dark");
+                themeBtn.textContent = "☀ Light Mode";
+            }
+
+            themeBtn.addEventListener("click", () => {
+                document.body.classList.toggle("dark");
+
+                if (document.body.classList.contains("dark")) {
+                    localStorage.setItem("theme", "dark");
+                    themeBtn.textContent = "☀ Light Mode";
+                } else {
+                    localStorage.setItem("theme", "light");
+                    themeBtn.textContent = "🌙 Dark Mode";
+                }
+            });
+        </script>
+
+    </body>
+
+</html>
