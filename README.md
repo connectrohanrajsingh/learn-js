@@ -62,7 +62,7 @@ Master reusable code blocks:
 
 Handle collections and structured data:  
 
-- 📋 **Array Methods**: `map`, `filter`, `reduce`, `forEach`, etc.  
+- 📋 **Array Methods**: `map`, `filter`, `reduce`, `every`, `forEach`, etc.  
 - 🏷 **Object Properties & Methods**  
 - ✂️ **Destructuring**  
 - 📦 **Spread Operator**  

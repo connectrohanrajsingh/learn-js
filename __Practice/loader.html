@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Glass Progress Loader</title>
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: Arial, sans-serif;
+            }
+
+            body {
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: #05070d;
+                overflow: hidden;
+            }
+
+            /* glowing background blobs */
+            body::before,
+            body::after {
+                content: "";
+                position: absolute;
+                width: 340px;
+                height: 340px;
+                border-radius: 50%;
+                filter: blur(100px);
+                opacity: .35;
+                animation: float 8s ease-in-out infinite;
+            }
+
+            body::before {
+                background: #00d9ff;
+                top: -90px;
+                left: -90px;
+            }
+
+            body::after {
+                background: #7c3aed;
+                right: -90px;
+                bottom: -90px;
+                animation-delay: 2s;
+            }
+
+            @keyframes float {
+                50% {
+                    transform: translateY(35px) scale(1.08);
+                }
+            }
+
+            .glass-box {
+                width: 500px;
+                padding: 50px 40px;
+                border-radius: 30px;
+                background: rgba(255, 255, 255, .06);
+                backdrop-filter: blur(22px);
+                -webkit-backdrop-filter: blur(22px);
+                border: 1px solid rgba(255, 255, 255, .14);
+                box-shadow:
+                    0 8px 40px rgba(0, 0, 0, .45),
+                    inset 0 0 2px rgba(255, 255, 255, .2);
+            }
+
+            .percent {
+                text-align: center;
+                font-size: 48px;
+                font-weight: 700;
+                color: #fff;
+                margin-bottom: 30px;
+                text-shadow: 0 0 15px rgba(255, 255, 255, .18);
+            }
+
+            /* bar */
+            .progress-track {
+                width: 100%;
+                height: 28px;
+                background: rgba(255, 255, 255, .08);
+                border-radius: 50px;
+                overflow: hidden;
+                border: 1px solid rgba(255, 255, 255, .08);
+                box-shadow:
+                    inset 0 0 12px rgba(0, 0, 0, .35);
+            }
+
+            /* exactly 20% fill */
+            .progress-fill {
+                width: 0%;
+                height: 100%;
+                border-radius: 50px;
+                background: linear-gradient(90deg,
+                        #00e5ff,
+                        #8b5cf6);
+                box-shadow:
+                    0 0 18px rgba(0, 229, 255, .35);
+            }
+
+            .label {
+                margin-top: 24px;
+                text-align: center;
+                letter-spacing: 5px;
+                font-size: 18px;
+                color: #cbd5e1;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="glass-box">
+
+            <div class="percent">0%</div>
+
+            <div class="progress-track">
+                <div class="progress-fill"></div>
+            </div>
+
+            <div class="label">LOADING...</div>
+
+        </div>
+
+        <script>
+            let percent = document.querySelector(".percent");
+            let processFill = document.querySelector(".progress-fill");
+            let label = document.querySelector(".label");
+
+            let progressCounter = 0;
+
+            let loader = setInterval(function () {
+
+                if (progressCounter <= 100) {
+                    processFill.style.width = `${progressCounter}%`;
+                    percent.textContent = `${progressCounter}%`;
+                    progressCounter++;
+                } else {
+                    label.textContent = 'Loaded';
+                    clearInterval(loader);
+                }
+                // console.log(progressCounter);
+            }, 100);
+
+
+            // let cobject = { name: "rohan", middle: " raj ", surname: ' singh' };
+            // let { name, surname } = cobject;
+            // console.log(name);
+
+            // let carray = ["rohan", " raj ", "  singh"];
+            // carray2 = carray.map(ca => ca.trim());
+            // console.log(carray2);
+
+
+            // let ccheck = ["rohan", "raj", "  singh"];
+            // ccheckresult = ccheck.filter(
+            //     function (ca) {
+            //         if (ca.length > 3) return ca;
+            //     });
+            // console.log(ccheckresult);
+
+        </script>
+
+    </body>
+
+</html>
