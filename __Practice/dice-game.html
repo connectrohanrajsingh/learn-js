@@ -152,15 +152,14 @@
                 let playerScore = `${player}score`;
                 let playerRolled = `${player}rolled`;
 
-                rolledDiceBtn = document.querySelector("#rolldice");
+                let rolledDiceBtn = document.querySelector("#rolldice");
                 rolledDiceBtn.disabled = true;
                 rolledDiceBtn.style.background = 'grey';
 
+                let scoreControl = document.querySelector(`#${playerScore}`);
+                let currentScore = scoreControl.textContent;
 
-                scoreControl = document.querySelector(`#${playerScore}`);
-                currentScore = scoreControl.textContent;
-
-                diceControl = document.querySelector(`#${playerDice}`);
+                let diceControl = document.querySelector(`#${playerDice}`);
                 diceControl.src = diceJson.spinner;
 
                 setTimeout(() => {
@@ -168,13 +167,11 @@
                     let rolledDice = `dice${rolledNumber}`;
                     diceControl.src = diceJson.dice[rolledDice];
 
-                    updatedScore = parseInt(currentScore) + parseInt(rolledNumber);
+                    let updatedScore = parseInt(currentScore) + parseInt(rolledNumber);
                     scoreControl.textContent = updatedScore;
 
                     let playerSwitch = { player1: { label: 'Player 2', value: 'player2' }, player2: { label: 'Player 1', value: 'player1' } };
-
                     let nextPlayer = playerSwitch[player];
-
 
                     rolledDiceBtn.value = nextPlayer.value;
                     rolledDiceBtn.textContent = `Roll Dice (${nextPlayer.label} )`;
@@ -182,7 +179,6 @@
                     localStorage.setItem(`${playerScore}`, updatedScore);
                     localStorage.setItem(`${playerRolled}`, diceJson.dice[rolledDice]);
                     localStorage.setItem('playerTurn', JSON.stringify(nextPlayer));
-
 
                     if (updatedScore >= winAt) {
                         rolledDiceBtn.hidden = true;
@@ -200,12 +196,11 @@
                             }
 
                         }, 1000)
+                    } else {
+
+                        rolledDiceBtn.disabled = false;
+                        rolledDiceBtn.style.background = '#00d4ff';
                     }
-
-                    rolledDiceBtn.disabled = false;
-                    rolledDiceBtn.style.background = '#00d4ff';
-
-
 
                 }, 1000);
             }
@@ -220,17 +215,17 @@
                     let playerRolled = `${player}rolled`;
 
 
-                    savedDiceValue = localStorage.getItem(`${playerDice}`);
+                    let savedDiceValue = localStorage.getItem(`${playerRolled}`);
                     if (savedDiceValue) {
-                        document.querySelector(`#${playerDice}`).textContent = savedDiceValue;
+                        document.querySelector(`#${playerDice}`).src = savedDiceValue;
                     }
 
-                    savedScoreValue = localStorage.getItem(`${playerScore}`);
+                    let savedScoreValue = localStorage.getItem(`${playerScore}`);
                     if (savedScoreValue) {
                         document.querySelector(`#${playerScore}`).textContent = savedScoreValue;
-                        console.log(savedScoreValue);
+
                         if (savedScoreValue >= winAt) {
-                            rolledDiceBtn = document.querySelector("#rolldice");
+                            let rolledDiceBtn = document.querySelector("#rolldice");
                             rolledDiceBtn.hidden = true;
 
                             let resetCounter = 5;
@@ -248,26 +243,21 @@
                             }, 1000)
                         }
                     }
-
-                    savedRolledDice = localStorage.getItem(`${playerRolled}`);
-                    if (savedRolledDice) {
-                        diceControl = document.querySelector(`#${playerDice}`).src = savedRolledDice;
-                    }
                 });
 
-                savedTurnString = localStorage.getItem('playerTurn');
+                let savedTurnString = localStorage.getItem('playerTurn');
                 if (savedTurnString) {
 
-                    nextPlayer = JSON.parse(savedTurnString);
+                    let nextPlayer = JSON.parse(savedTurnString);
 
-                    rolledDiceBtn = document.querySelector("#rolldice")
+                    let rolledDiceBtn = document.querySelector("#rolldice")
                     rolledDiceBtn.value = nextPlayer.value;
                     rolledDiceBtn.textContent = `Roll Dice (${nextPlayer.label} )`;
                 }
             }
 
             function clearGame() {
-                rolledDiceBtn = document.querySelector("#rolldice");
+                let rolledDiceBtn = document.querySelector("#rolldice");
                 rolledDiceBtn.disabled = true;
                 rolledDiceBtn.style.background = 'grey';
 
@@ -283,11 +273,9 @@
 
 
             let dice = document.querySelector("#rolldice");
-            dice.addEventListener("click", function (dice) {
-                rollDice(dice.target.value);
+            dice.addEventListener("click", function (d) {
+                rollDice(d.target.value);
             })
-
-
 
             initGame();
         </script>
