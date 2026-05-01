@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dark Test Page</title>
+
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                height: 100vh;
+                background: #0d1117;
+                color: #e6edf3;
+                font-family: Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .container {
+                min-width: 10%;
+                max-width: 90%;
+                text-align: center;
+                padding: 30px;
+                border-radius: 12px;
+                background: #262e38;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+            }
+
+            .output {
+                margin-top: 15px;
+                font-weight: bold;
+                color: #ffffff;
+            }
+        </style>
+
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="output" id="output">
+                Output will be shown here.
+            </div>
+        </div>
+
+        <script src="playground.js"></script>
+    </body>
+
+</html>
