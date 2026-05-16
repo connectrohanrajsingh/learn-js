@@ -1,216 +1,185 @@
-// Arrays store multiple values in a single variable
-// Index starts from 0
+// ==========================================================
+// ARRAYS — All Methods, Immutable Operations, Sparse, Multi-dim
+// ==========================================================
+
+// 1. Creating Arrays
+// ======================
+let a1 = [1, 2, 3]
+let a2 = new Array(3)        // sparse array of length 3 (empty slots)
+let a3 = new Array(3).fill(0) // [0, 0, 0]
+let a4 = Array.from("hello") // ["h", "e", "l", "l", "o"]
+let a5 = Array.of(1, 2, 3)   // [1, 2, 3]
+
+
+// 2. Sparse Arrays
+// ======================
+let sparse = [1, , , 4]
+console.log(sparse.length)     // 4
+console.log(sparse[1])         // undefined
+console.log(sparse.hasOwnProperty(1)) // false (slot doesn't exist)
+sparse.forEach(v => console.log(v))   // skips empty slots!
 
+
+// 3. at() — Negative Indexing (ES2022)
+// ======================
+let arr = [10, 20, 30, 40]
+console.log(arr.at(0))   // 10
+console.log(arr.at(-1))  // 40 (last)
+console.log(arr.at(-2))  // 30
+// arr[-1] doesn't work — that's a property access
+
 
+// 4. Adding/Removing — Mutating
+// ======================
+let items = [1, 2, 3]
 
-// 1. CREATING ARRAYS
-// ==================================================
-let arr1 = [1, 2, 3, 4];
-let arr2 = new Array(5, 6, 7);
+items.push(4)         // end:    [1, 2, 3, 4]  → returns length
+items.pop()           // end:    [1, 2, 3]      → returns removed
+items.unshift(0)      // start:  [0, 1, 2, 3]  → returns length
+items.shift()         // start:  [1, 2, 3]      → returns removed
+
+// splice — insert, remove, replace at any position:
+items.splice(1, 0, 99)    // at index 1, remove 0, add 99
+// [1, 99, 2, 3]
+items.splice(1, 1)        // at index 1, remove 1
+// [1, 2, 3]
+items.splice(1, 1, 42)    // at index 1, remove 1, add 42
+// [1, 42, 3]
 
-console.log(arr1); // [1, 2, 3, 4]
-console.log(arr2); // [5, 6, 7]
 
+// 5. Searching
+// ======================
+let nums = [10, 20, 30, 20, 40]
 
+nums.indexOf(20)           // 1 (first)
+nums.lastIndexOf(20)       // 3 (last)
+nums.includes(30)          // true
 
+nums.find(n => n > 20)     // 30 (first element)
+nums.findIndex(n => n > 20) // 2
+nums.findLast(n => n > 20)  // 40 (ES2023, last element)
+nums.findLastIndex(n => n > 20) // 4
 
-// 2. ACCESSING ELEMENTS
-// ==================================================
-let fruits = ["Apple", "Banana", "Mango"];
 
-console.log(fruits[0]); // Apple
-console.log(fruits[fruits.length - 1]); // Mango
+// 6. Iterating
+// ======================
+nums.forEach((val, idx, arr) => console.log(idx, val))
+// forEach: no break/continue (use some or for...of)
 
 
+// 7. Transforming — Creates New Array
+// ======================
+console.log(nums.map(n => n * 2))         // [20, 40, 60, 40, 80]
+console.log(nums.filter(n => n > 20))     // [30, 40]
+console.log(nums.flatMap(n => [n, n * 2]))// [10,20,20,40,30,60,20,40,40,80]
 
 
-// 3. ARRAY LENGTH
-// ==================================================
-console.log("Length:", fruits.length); // Length: 3
+// 8. Reducing to Single Value
+// ======================
+let sum = nums.reduce((acc, n) => acc + n, 0)     // 120
+let max = nums.reduce((acc, n) => Math.max(acc, n), -Infinity)
+let product = nums.reduce((acc, n) => acc * n, 1)
 
+// No initial value — uses first element as accumulator:
+let avg = nums.reduce((acc, n, i, arr) => {
+  acc += n
+  if (i === arr.length - 1) return acc / arr.length
+  return acc
+})
+console.log(avg)
+
+
+// 9. Testing
+// ======================
+console.log(nums.some(n => n > 30))  // true (at least one)
+console.log(nums.every(n => n < 50)) // true (all)
+console.log(nums.includes(20))       // true
+
+
+// 10. Sorting and Reversing — Mutates!
+// ======================
+let vals = [3, 30, 1, 20]
 
+// Default: converts to string first!
+vals.sort()
+console.log(vals) // [1, 20, 3, 30] — wrong numeric sort!
 
+// Correct numeric sort:
+vals.sort((a, b) => a - b)   // ascending  [1, 3, 20, 30]
+vals.sort((a, b) => b - a)   // descending [30, 20, 3, 1]
+console.log(vals)
 
-// 4. MODIFYING ARRAYS
-// ==================================================
-fruits[1] = "Orange";
-console.log(fruits); // ["Apple", "Orange", "Mango"]
+vals.reverse()
 
+// toSorted / toReversed (ES2023) — non-mutating:
+let sorted = vals.toSorted((a, b) => a - b)
+let reversed = vals.toReversed()
+console.log(vals)     // original unchanged
 
 
+// 11. Flat and FlatMap
+// ======================
+let nested = [1, [2, [3, 4]]]
+console.log(nested.flat())       // [1, 2, [3, 4]] (depth 1)
+console.log(nested.flat(2))      // [1, 2, 3, 4]
 
-// 5. ADDING & REMOVING ELEMENTS
-// ==================================================
+// flatMap = map + flat(1):
+let phrases = ["hello world", "foo bar"]
+console.log(phrases.flatMap(s => s.split(" "))) // ["hello", "world", "foo", "bar"]
 
-// push() → add at end
-fruits.push("Grapes");
-console.log("push:", fruits); // ["Apple","Orange","Mango","Grapes"]
 
-// pop() → remove from end
-fruits.pop();
-console.log("pop:", fruits); // ["Apple","Orange","Mango"]
+// 12. Immutable Update Methods (ES2023)
+// ======================
+let orig = [1, 2, 3]
 
-// unshift() → add at start
-fruits.unshift("Pineapple");
-console.log("unshift:", fruits); // ["Pineapple","Apple","Orange","Mango"]
+orig.with(1, 99)        // [1, 99, 3] (replace at index)
+orig.toSpliced(1, 1)    // [1, 3] (remove)
+orig.toSpliced(1, 0, 99)// [1, 99, 2, 3] (insert)
+orig.toReversed()        // [3, 2, 1]
+orig.toSorted()          // [1, 2, 3]
 
-// shift() → remove from start
-fruits.shift();
-console.log("shift:", fruits); // ["Apple","Orange","Mango"]
+console.log(orig)        // [1, 2, 3] — unchanged
 
 
+// 13. Array-like to Array Conversion
+// ======================
+let nodeList = document?.querySelectorAll?.("div") || []
 
+// Convert:
+let arrDivs = Array.from(nodeList)
+let spreadDivs = [...nodeList]
 
-// 6. LOOPING ARRAYS
-// ==================================================
+// Array.from with map:
+let doubled = Array.from([1, 2, 3], x => x * 2)
 
-// for loop
-for (let i = 0; i < fruits.length; i++) {
-  console.log("for loop:", fruits[i]);
-}
-// for loop: Apple
-// for loop: Orange
-// for loop: Mango
 
-// for...of
-for (let fruit of fruits) {
-  console.log("for...of:", fruit);
-}
-// for...of: Apple
-// for...of: Orange
-// for...of: Mango
+// 14. fill and copyWithin
+// ======================
+console.log(new Array(5).fill(0))       // [0, 0, 0, 0, 0]
+console.log([1, 2, 3, 4, 5].fill(0, 1, 3)) // [1, 0, 0, 4, 5]
 
-// forEach()
-fruits.forEach(function (fruit, index) {
-  console.log("forEach:", index, fruit);
-});
-// forEach: 0 Apple
-// forEach: 1 Orange
-// forEach: 2 Mango
+let ca = [1, 2, 3, 4, 5]
+ca.copyWithin(0, 3)   // copy index 3..end to index 0
+console.log(ca)        // [4, 5, 3, 4, 5]
 
 
+// 15. Multi-dimensional Arrays
+// ======================
+let matrix = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+]
+console.log(matrix[1][2]) // 6
 
 
-// 7. SEARCHING IN ARRAYS
-// ==================================================
-let numbers = [10, 20, 30, 40, 50];
-
-console.log("indexOf 30:", numbers.indexOf(30)); // 2
-console.log("includes 40:", numbers.includes(40)); // true
-console.log("find >25:", numbers.find(n => n > 25)); // 30
-console.log("findIndex >25:", numbers.findIndex(n => n > 25)); // 2
-
-
-
-
-// 8. TRANSFORMING ARRAYS
-// ==================================================
-
-// map() → create new array
-let doubled = numbers.map(n => n * 2);
-console.log("map doubled:", doubled); // [20, 40, 60, 80, 100]
-
-// filter() → filter values
-let bigNums = numbers.filter(n => n > 25);
-console.log("filter >25:", bigNums); // [30, 40, 50]
-
-// reduce() → reduce to single value
-let sum = numbers.reduce((total, n) => total + n, 0);
-console.log("reduce sum:", sum); // 150
-
-
-
-
-// 9. SORTING & REVERSING
-// ==================================================
-let vals = [5, 2, 9, 1];
-
-vals.sort();
-console.log("sort default:", vals); // [1, 2, 5, 9] (string sort works here by chance)
-
-vals.sort((a, b) => a - b);
-console.log("sort numeric:", vals); // [1, 2, 5, 9] (do b-a for descending sort)
-
-vals.reverse();
-console.log("reverse:", vals); // [9, 5, 2, 1]
-
-
-
-
-// 10. SLICE & SPLICE
-// ==================================================
-let arr = [1, 2, 3, 4, 5];
-
-// slice returns an another array as instructed
-console.log("slice(1,4):", arr.slice(1, 4)); // [2, 3, 4]
-console.log("original after slice:", arr); // [1, 2, 3, 4, 5]
-
-// splice modifies the original array (it can be used to push elements on desired place too)
-arr.splice(2, 1, 99);
-console.log("splice result:", arr); // [1, 2, 99, 4, 5]
-
-
-
-
-// 11. JOIN & SPLIT
-// ==================================================
-let words = ["JS", "is", "fun"];
-let sentence = words.join(" ");
-console.log("join:", sentence); // "JS is fun"
-
-let backToArray = sentence.split(" ");
-console.log("split:", backToArray); // ["JS","is","fun"]
-
-
-
-
-// 12. CONCAT & SPREAD
-// ==================================================
-let a = [1, 2];
-let b = [3, 4];
-
-console.log("concat:", a.concat(b)); // [1,2,3,4]
-console.log("spread:", [...a, ...b]); // [1,2,3,4]
-
-
-
-
-// 13. MULTI-DIMENSIONAL ARRAYS
-// ==================================================
-let matrix = [[1, 2], [3, 4]];
-
-console.log("matrix[0][1]:", matrix[0][1]); // 2
-
-
-
-// 14. ARRAY DESTRUCTURING
-// ==================================================
-let colors = ["red", "green", "blue"];
-let [first, second] = colors;
-console.log("destructuring:", first, second); // red green
-
-
-
-
-// 15. ARRAY IS OBJECT
-// ==================================================
-console.log(typeof fruits); // object
-console.log(Array.isArray(fruits)); // true
-
-
-
-
-// 16. SUMMARY
-// ==================================================
-// Creation: [], new Array()
-// Access: arr[index]
-// Length: arr.length
-// Add/Remove: push, pop, shift, unshift
-// Loop: for, for...of, forEach
-// Search: indexOf, includes, find, findIndex
-// Transform: map, filter, reduce
-// Modify: slice (copy), splice (change)
-// Combine: concat, spread [...]
-// Convert: join (array→string), split (string→array)
-// Sort: sort(), reverse()
-// Advanced: destructuring, multi-dimensional arrays
+// 16. Summary
+// ======================
+// Mutating: push/pop, shift/unshift, splice, sort, reverse, fill, copyWithin
+// Non-mutating: slice, concat, map, filter, flat, flatMap, toSorted, toReversed, toSpliced, with
+// Search: indexOf, lastIndexOf, includes, find, findIndex, findLast, findLastIndex
+// Test: some, every
+// Reduce: reduce, reduceRight
+// Create: Array.from, Array.of, [...], []
+// at(n): negative index support
+// Avoid mutations: prefer toSorted, toReversed, toSpliced, with
